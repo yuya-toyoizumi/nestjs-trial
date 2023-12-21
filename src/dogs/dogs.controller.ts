@@ -9,26 +9,26 @@ export class DogsController {
 
   @Post()
   create(@Body() createDogDto: CreateDogDto) {
-    return this.dogsService.create(createDogDto);
+    return this.dogsService.createDog(createDogDto);
   }
 
   @Get()
   findAll() {
-    return this.dogsService.findAll();
+    return this.dogsService.dogs({});
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.dogsService.findOne(+id);
+    return this.dogsService.dog(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateDogDto: UpdateDogDto) {
-    return this.dogsService.update(+id, updateDogDto);
+    return this.dogsService.updateDog(+id, updateDogDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.dogsService.remove(+id);
+    return this.dogsService.deleteDog(+id);
   }
 }
