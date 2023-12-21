@@ -1,13 +1,4 @@
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 3000:3000
-    restart: always
-    volumes:
-      - ./src:/app/src
   postgres:
     image: postgres:16
     environment:
