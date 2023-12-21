@@ -8,8 +8,10 @@ import { Dog, Prisma } from '@prisma/client';
 export class DogsService {
   constructor(private prisma: PrismaService) {}
 
-  createDog(createDogDto: CreateDogDto) {
-   return 'This action adds a new dog';
+  createDog(data: Prisma.DogCreateInput): Promise<Dog> {
+    return this.prisma.dog.create({
+      data
+    });
   }
 
   async dogs(params: {
