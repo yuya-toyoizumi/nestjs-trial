@@ -8,42 +8,26 @@ import { Dog, Prisma } from '@prisma/client';
 export class DogsService {
   constructor(private prisma: PrismaService) {}
 
-  async createDog(data: Prisma.DogCreateInput): Promise<Dog> {
-    return this.prisma.dog.create({
-      data
+  async create(createDogDto: CreateDogDto): Promise<Dog> {
+    return this.prisma.dog.create({ data: createDogDto });
+  }
+
+  async findAll(): Promise<Dog[]> {
+    return this.prisma.dog.findMany();
+  }
+
+  async findOne(id: string): Promise<Dog | null> {
+    return this.prisma.dog.findUnique({ where: { id } });
+  }
+
+  async update(id: string, updateDogDto: UpdateDogDto): Promise<Dog> {
+    return this.prisma.dog.update({
+      where: { id },
+      data: updateDogDto,
     });
   }
 
-  async dogs(params: {
-    skip?: number;
-    take?: number;
-    cursor?: Prisma.DogWhereUniqueInput;
-    where?: Prisma.DogWhereInput;
-    orderBy?: Prisma.DogOrderByWithRelationInput;
-  }): Promise<Dog[]> {
-    const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.dog.findMany({
-      skip,
-      take,
-      cursor,
-      where,
-      orderBy,
-    });
-  }
-
-  async dog(
-    dogWhereUniqueInput: Prisma.DogWhereUniqueInput,
-  ): Promise<Dog | null> {
-    return this.prisma.dog.findUnique({
-      where: dogWhereUniqueInput,
-    })
-  }
-
-  updateDog(id: number, updateDogDto: UpdateDogDto) {
-    return `This action updates a #${id} dog`;
-  }
-
-  deleteDog(id: number) {
-    return `This action removes a #${id} dog`;
+  async delete(id: string): Promise<Dog> {
+    return this.prisma.dog.delete({ where: { id } });
   }
 }

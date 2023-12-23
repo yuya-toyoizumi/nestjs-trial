@@ -11,27 +11,27 @@ export class DogsController {
   constructor(private readonly dogsService: DogsService) {}
 
   @Post()
-  async create(@Body() createDogDto: CreateDogDto) {
-    return this.dogsService.createDog(createDogDto);
+  async create(@Body() createDogDto: CreateDogDto): Promise<Dog> {
+    return this.dogsService.create(createDogDto);
   }
 
   @Get()
-  async findAll() {
-    return this.dogsService.dogs({});
+  async findAll(): Promise<Dog[]> {
+    return this.dogsService.findAll();
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Dog> {
-    return this.dogsService.dog({ id });
+    return this.dogsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDogDto: UpdateDogDto) {
-    return this.dogsService.updateDog(+id, updateDogDto);
+  async update(@Param('id') id: string, @Body() updateDogDto: UpdateDogDto): Promise<Dog> {
+    return this.dogsService.update(id, updateDogDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.dogsService.deleteDog(+id);
+  remove(@Param('id') id: string): Promise<Dog> {
+    return this.dogsService.delete(id);
   }
 }
