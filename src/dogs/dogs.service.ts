@@ -31,8 +31,12 @@ export class DogsService {
     });
   }
 
-  dog(id: number) {
-    return `This action returns a #${id} dog`;
+  async dog(
+    dogWhereUniqueInput: Prisma.DogWhereUniqueInput,
+  ): Promise<Dog | null> {
+    return this.prisma.dog.findUnique({
+      where: dogWhereUniqueInput,
+    })
   }
 
   updateDog(id: number, updateDogDto: UpdateDogDto) {

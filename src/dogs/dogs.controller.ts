@@ -3,6 +3,7 @@ import { DogsService } from './dogs.service';
 import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Dog } from '@prisma/client';
 
 @Controller('dogs')
 @ApiTags('dogs')
@@ -20,8 +21,8 @@ export class DogsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.dogsService.dog(+id);
+  async findOne(@Param('id') id: string): Promise<Dog> {
+    return this.dogsService.dog({ id });
   }
 
   @Patch(':id')
