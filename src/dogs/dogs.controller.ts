@@ -11,12 +11,12 @@ export class DogsController {
   constructor(private readonly dogsService: DogsService) {}
 
   @Post()
-  create(@Body() createDogDto: CreateDogDto) {
+  async create(@Body() createDogDto: CreateDogDto) {
     return this.dogsService.createDog(createDogDto);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.dogsService.dogs({});
   }
 
