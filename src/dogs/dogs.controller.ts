@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { DogsService } from './dogs.service';
 import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
@@ -22,7 +22,13 @@ export class DogsController {
 
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Dog> {
-    return this.dogsService.findOne(id);
+    const res = await this.dogsService.findOne(id);
+
+    if (!res) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+
+    return res;
   }
 
   @Patch(':id')
